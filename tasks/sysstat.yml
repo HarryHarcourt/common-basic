@@ -1,0 +1,27 @@
+---
+
+###
+## Tasks to setup system status collection (sar)
+#
+
+  - name: Configure sysstat
+    template: src={{syscfg}}/sysstat.tmpl
+          dest=/etc/sysconfig/sysstat
+          mode=644 owner=root group=root backup=false
+    tags:
+        - sysstat_conf
+
+  - name: Enable disk statistics (OEL5)
+    lineinfile: >
+          dest=/etc/cron.d/sysstat
+          regexp='sa1 '
+          line='*/10 * * * * root /usr/lib64/sa/sa1 -d 1 1'
+          backup=false
+    when: ansible_distribution_major_version|int == 5
+    tags:
+        - sysstat_disk
+
+  - name: Set /var/log/sa permissions
+    file: path=/var/log/sa owner=root group=root mode=755 state=directory
+    tags: 
+        - sa_dir

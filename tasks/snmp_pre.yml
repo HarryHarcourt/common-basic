@@ -1,0 +1,16 @@
+---
+- name: Check OS
+  fail: msg="Operating system is not Linux"
+  when: ansible_system != "Linux"
+  tags:
+      - always
+      - check_os
+
+- name: Update net-snmp
+  yum:  name=net-snmp state=present
+  register: snmp_update
+  tags: 
+      - snmp_update
+
+- include: include/snmp_post.yml
+

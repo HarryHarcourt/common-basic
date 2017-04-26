@@ -1,0 +1,12 @@
+---
+###
+## This file prints out the variables attached to a host (I hope)
+#
+
+  - name: Print out the show_vari_dump variable
+    debug: msg="show_vari_dump is {{ show_vari_dump }}"
+
+  - name: Print out the variables attached to a host - "{{ show_vari_dump }}"
+    debug: var=hostvars[inventory_hostname]
+    when: show_vari_dump == True
+

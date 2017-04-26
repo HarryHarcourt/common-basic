@@ -1,0 +1,63 @@
+---
+# Variables for all Chicago servers
+
+datacenter: Chicago
+
+# These are the variables for the YUM Repository File
+
+yum_server: 172.19.19.195
+path: rhel-7-server-rpms
+
+# DNS
+dns_domain: ansitest.com
+dns_search: ansitest.com bentest.com
+
+dns_nameservers: |+
+ nameserver 10.223.1.254
+ nameserver 208.67.222.222
+ nameserver 208.67.220.220
+
+# NTP
+ntp_clients: |+
+ server 0.pool.ntp.org
+ server 1.pool.ntp.org
+ server 2.pool.ntp.org
+ server 3.pool.ntp.org
+
+ntp_servers: |+
+ server asia.pool.ntp.org
+ restrict asia.pool.ntp.org mask 255.255.255.255 nomodify notrap noquery
+ peer ntp1.xpo.com
+ restrict ntp1-1.xpo.com mask 255.255.255.255 nomodify notrap 
+ peer ntp2.xpo.com
+ restrict ntp1-2.xpo.com mask 255.255.255.255 nomodify notrap 
+ peer ntp3.xpo.com
+ restrict ntp1-3.xpo.com mask 255.255.255.255 nomodify notrap 
+
+
+# Sendmail
+smtp_smarthost: mailgw.xpo.com
+
+
+# SNMP
+snmp_community: bentest
+snmp_syscontact: benjamin.wright@xpo.com
+snmp_syslocation: Chicago Datacenter
+
+snmp_servers:
+  - { server: xposnmp01.xpo.com, community: "{{ snmp_community }}" }
+  - { server: xposnmp02.xpo.com, community: "{{ snmp_community }}" }
+  - { server: xposnmp03.xpo.com, community: "{{ snmp_community }}" }
+  - { server: xposnmp04.xpo.com, community: "{{ snmp_community }}" }
+  - { server: xponetflow.xpo.com, community: "{{ snmp_community }}" }
+  - { server: localhost.localdomain, community: "{{ snmp_community }}" }
+
+snmp_trapsink:
+  - { server: xpotrapsink01.xpo.com, community: "{{ snmp_community }}" }
+  - { server: xpotrapsink02.xpo.com, community: "{{ snmp_community }}" }
+
+
+# VMware
+vcntr_srvr: xpovcenter
+vcntr_srvr_fqdn: xpovcenter.infra.xpo.com
+

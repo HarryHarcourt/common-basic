@@ -1,0 +1,17 @@
+---
+
+###
+## Tasks to install the base packages on all the servers
+#
+
+
+  - name: Install a base set up packages
+    yum: name={{item}} state=installed
+    with_items:
+         - nfs-utils
+         - ntp
+         - wget
+         - net-tools
+         - net-snmp
+         - net-snmp-utils
+         - lsof    

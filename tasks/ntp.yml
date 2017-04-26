@@ -1,0 +1,20 @@
+---
+
+###
+## Tasks to configure the NTP service on servers.
+#
+
+  - name: Ensure NTP is installed
+    yum: name=ntp state=present
+    tags:
+        - ntp_install
+
+
+  - name: Install NTP configuration
+    template: src=templates/ntp.conf.j2
+          dest=/etc/ntp.conf
+          mode=644 owner=root group=root backup=true
+    notify: Restart ntp
+    tags:
+        - ntp_conf
+

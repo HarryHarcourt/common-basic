@@ -1,0 +1,36 @@
+---
+- name: os-specific vars called from rolename/vars
+  include_vars:  "{{ ansible_os_family }}.yml"
+  tags:
+      - always
+
+- name: Dump Variables
+  include: debug_vars.yml
+  when: show_vari_dump != 'true'
+  tags:
+      - always
+
+- name: Gather the common variables
+  include: common-parameters.yml
+  tags:
+      - always
+
+- name: Install base packages
+  include: base_packages.yml
+  tags:
+      - always
+
+- name: Install / Configure NTP
+  include: ntp.yml
+  tags:
+      - always
+
+- name: Install and configure SAR
+  include: sysstat.yml
+  tags:
+      - sar
+
+- name: Configure SNMP
+  include: snmp_pre.yml
+  tags:
+      - snmp
